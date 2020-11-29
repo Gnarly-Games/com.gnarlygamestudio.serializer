@@ -1,0 +1,18 @@
+{
+  "name": "com.gnarlygamestudio.serializer",
+  "displayName": "Bridge Stream",
+  "description": "BridgeStream is an order oriented binary serialization library developed for performance and efficiency.",
+  "version": "1.0.0",
+  "unity": "2019.4",
+  "dependencies": {
+    "com.unity.test-framework": "1.1.3"
+  },
+  "relatedPackages": {
+    "com.unity.ide.rider.tests": "1.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.cds.internal.unity3d.com:unity/com.unity.ide.rider.git",
+    "revision": "d2ef95989104a4ce866cdcb7f94cf3c67476fcc9"
+  }
+}
