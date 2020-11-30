@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -13,8 +14,9 @@ namespace GnarlyGameStudio.Serializer
         private int _capacity;
         private const int DefaultCapacity = 16;
 
-        public bool Empty => _buffer.Length == 0;
-        public bool HasMore => _buffer.Length > _readIndex;
+        public bool Empty => _writeIndex == 0;
+        public bool HasMore => _writeIndex > _readIndex;
+        public bool CheckMore(int needIndex) => _writeIndex >= _readIndex + needIndex;
 
         public BridgeStream()
         {
@@ -25,6 +27,21 @@ namespace GnarlyGameStudio.Serializer
         {
             _buffer = data;
             _capacity = _buffer.Length;
+            _writeIndex = _capacity;
+        }
+
+        public void AppendToSource(byte[] data, int length)
+        {
+            if (_buffer == null)
+            {
+                _buffer = new byte[DefaultCapacity];
+                _capacity = _buffer.Length;
+                _writeIndex = 0;
+            }
+
+            GrowBuffer(length);
+            Buffer.BlockCopy(data, 0, _buffer, _writeIndex, length);
+            _writeIndex += length;
         }
 
         private void WriteByteArray(byte[] bytes)
@@ -53,6 +70,8 @@ namespace GnarlyGameStudio.Serializer
 
         public void Write(string value)
         {
+            if (value == null)
+                value = string.Empty;
             var bytes = Encoding.UTF8.GetBytes(value);
             Write(bytes.Length);
             WriteByteArray(bytes);
@@ -252,7 +271,6 @@ namespace GnarlyGameStudio.Serializer
             return data;
         }
 
-
         public void Write(BridgeStream bridgeStream)
         {
             if (bridgeStream == null)
@@ -287,7 +305,6 @@ namespace GnarlyGameStudio.Serializer
             return returnObject;
         }
 
-
         public IBridgeSerializer Read(Type type)
         {
             var returnObject = (IBridgeSerializer) Activator.CreateInstance(type);
@@ -295,7 +312,6 @@ namespace GnarlyGameStudio.Serializer
             returnObject.Read(packet);
             return returnObject;
         }
-
 
         public void Clear()
         {
@@ -357,6 +373,20 @@ namespace GnarlyGameStudio.Serializer
             for (var i = 0; i < length; i++)
             {
                 list.Add(Read<T>());
+            }
+
+            return list;
+        }
+
+        public IList ReadList(Type type)
+        {
+            var length = ReadInt();
+            var genericListType = typeof(List<>).MakeGenericType(type);
+            var list = (IList) Activator.CreateInstance(genericListType);
+
+            for (var i = 0; i < length; i++)
+            {
+                list.Add(Read(type));
             }
 
             return list;
