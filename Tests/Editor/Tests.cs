@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GnarlyGameStudio.Serializer;
 using NUnit.Framework;
 using UnityEngine;
 

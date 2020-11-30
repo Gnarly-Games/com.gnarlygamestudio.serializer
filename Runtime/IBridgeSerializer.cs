@@ -1,5 +1,8 @@
-﻿public interface IBridgeSerializer
+﻿namespace GnarlyGameStudio.Serializer
 {
-    void Read(BridgeStream stream);
-    void Write(BridgeStream stream);
+    public interface IBridgeSerializer
+    {
+        void Read(BridgeStream stream);
+        void Write(BridgeStream stream);
+    }
 }
