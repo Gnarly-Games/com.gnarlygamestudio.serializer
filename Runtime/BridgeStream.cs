@@ -83,7 +83,7 @@ namespace GnarlyGameStudio.Serializer
 
             fixed (byte* bufferPointer = _buffer)
             {
-                *(int*) (bufferPointer + _writeIndex) = value;
+                *(int*)(bufferPointer + _writeIndex) = value;
             }
 
             _writeIndex += 4;
@@ -109,7 +109,7 @@ namespace GnarlyGameStudio.Serializer
 
             fixed (byte* bufferPointer = _buffer)
             {
-                *(float*) (bufferPointer + _writeIndex) = value;
+                *(float*)(bufferPointer + _writeIndex) = value;
             }
 
             _writeIndex += 4;
@@ -177,7 +177,7 @@ namespace GnarlyGameStudio.Serializer
         private unsafe float ToFloat(byte[] buffer, int startIndex)
         {
             var val = ToInt(buffer, startIndex);
-            return *(float*) &val;
+            return *(float*)&val;
         }
 
         public int[] ReadIntArray()
@@ -260,7 +260,6 @@ namespace GnarlyGameStudio.Serializer
         {
             return new Vector3(ReadFloat(), ReadFloat(), ReadFloat());
         }
-
         public byte[] ReadByteArray()
         {
             var length = ReadInt();
@@ -307,7 +306,7 @@ namespace GnarlyGameStudio.Serializer
 
         public IBridgeSerializer Read(Type type)
         {
-            var returnObject = (IBridgeSerializer) Activator.CreateInstance(type);
+            var returnObject = (IBridgeSerializer)Activator.CreateInstance(type);
             var packet = ReadStream();
             returnObject.Read(packet);
             return returnObject;
@@ -317,6 +316,11 @@ namespace GnarlyGameStudio.Serializer
         {
             _buffer = new byte[DefaultCapacity];
             _capacity = DefaultCapacity;
+            _writeIndex = 0;
+            _readIndex = 0;
+        }
+        public void ClearKeepBuffer()
+        {
             _writeIndex = 0;
             _readIndex = 0;
         }
@@ -333,7 +337,6 @@ namespace GnarlyGameStudio.Serializer
         {
             return new Quaternion(ReadFloat(), ReadFloat(), ReadFloat(), ReadFloat());
         }
-
         public void WriteArray<T>(T[] bridgeSerializer) where T : IBridgeSerializer
         {
             Write(bridgeSerializer.Length);
@@ -382,7 +385,7 @@ namespace GnarlyGameStudio.Serializer
         {
             var length = ReadInt();
             var genericListType = typeof(List<>).MakeGenericType(type);
-            var list = (IList) Activator.CreateInstance(genericListType);
+            var list = (IList)Activator.CreateInstance(genericListType);
 
             for (var i = 0; i < length; i++)
             {
@@ -394,7 +397,7 @@ namespace GnarlyGameStudio.Serializer
 
         public void Write(bool data)
         {
-            Write((byte) (data ? 1 : 0));
+            Write((byte)(data ? 1 : 0));
         }
 
         public bool ReadBool()

@@ -208,35 +208,6 @@ namespace GnarlyGameStudio.Serializer
             Assert.AreEqual(true, sendValue);
         }
 
-
-        [Test]
-        public void TestVector3()
-        {
-            _sendBridgeStream.Write(new Vector3(04f, 05f, 06f));
-            var data = _sendBridgeStream.Encode();
-
-            var receivePacket = new BridgeStream(data);
-            var sendValue = receivePacket.ReadVector3();
-            Assert.AreEqual(04f, sendValue.x);
-            Assert.AreEqual(05f, sendValue.y);
-            Assert.AreEqual(06f, sendValue.z);
-        }
-
-        [Test]
-        public void TestQuaternion()
-        {
-            _sendBridgeStream.Write(new Quaternion(04f, 05f, 0.1f, 1.5f));
-            var data = _sendBridgeStream.Encode();
-
-            var receivePacket = new BridgeStream(data);
-            var sendValue = receivePacket.ReadQuaternion();
-            Assert.AreEqual(04f, sendValue.x);
-            Assert.AreEqual(05f, sendValue.y);
-            Assert.AreEqual(0.1f, sendValue.z);
-            Assert.AreEqual(1.5f, sendValue.w);
-        }
-
-
         [Test]
         public void TestNullBridgeStream()
         {
