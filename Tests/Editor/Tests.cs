@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace GnarlyGameStudio.Serializer
 {
@@ -51,24 +50,24 @@ namespace GnarlyGameStudio.Serializer
         [Test]
         public void TestIntArray()
         {
-            _sendBridgeStream.Write(new int[] {10, 11, 12});
+            _sendBridgeStream.Write(new int[] { 10, 11, 12 });
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
             var sendValue = receivePacket.ReadIntArray();
-            var expected = new int[] {10, 11, 12};
+            var expected = new int[] { 10, 11, 12 };
             Assert.AreEqual(expected, sendValue);
         }
 
         [Test]
         public void TestIntList()
         {
-            _sendBridgeStream.Write(new List<int>() {10, 11, 12});
+            _sendBridgeStream.Write(new List<int>() { 10, 11, 12 });
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
             var sendValue = receivePacket.ReadIntList();
-            var expected = new List<int>() {10, 11, 12};
+            var expected = new List<int>() { 10, 11, 12 };
             Assert.AreEqual(expected, sendValue);
         }
 
@@ -121,12 +120,12 @@ namespace GnarlyGameStudio.Serializer
         [Test]
         public void TestStringList()
         {
-            _sendBridgeStream.Write(new List<string>() {"ferhat", "mehmet", "seker", "seko"});
+            _sendBridgeStream.Write(new List<string>() { "ferhat", "mehmet", "seker", "seko" });
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
             var sendValue = receivePacket.ReadStringList();
-            var expected = new List<string>() {"ferhat", "mehmet", "seker", "seko"};
+            var expected = new List<string>() { "ferhat", "mehmet", "seker", "seko" };
             Assert.AreEqual(expected[0], sendValue[0]);
             Assert.AreEqual(expected[1], sendValue[1]);
             Assert.AreEqual(expected[2], sendValue[2]);
@@ -136,12 +135,12 @@ namespace GnarlyGameStudio.Serializer
         [Test]
         public void TestFloatList()
         {
-            _sendBridgeStream.Write(new List<float>() {19f, 20f, 25f, -10f});
+            _sendBridgeStream.Write(new List<float>() { 19f, 20f, 25f, -10f });
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
             var sendValue = receivePacket.ReadFloatList();
-            var expected = new List<float>() {19f, 20f, 25f, -10f};
+            var expected = new List<float>() { 19f, 20f, 25f, -10f };
             Assert.AreEqual(expected[0], sendValue[0]);
             Assert.AreEqual(expected[1], sendValue[1]);
             Assert.AreEqual(expected[2], sendValue[2]);
@@ -151,12 +150,12 @@ namespace GnarlyGameStudio.Serializer
         [Test]
         public void TestByteArray()
         {
-            _sendBridgeStream.Write(new byte[4] {19, 20, 25, 10});
+            _sendBridgeStream.Write(new byte[4] { 19, 20, 25, 10 });
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
             var sendValue = receivePacket.ReadByteArray();
-            var expected = new byte[4] {19, 20, 25, 10};
+            var expected = new byte[4] { 19, 20, 25, 10 };
             Assert.AreEqual(expected[0], sendValue[0]);
             Assert.AreEqual(expected[1], sendValue[1]);
             Assert.AreEqual(expected[2], sendValue[2]);
@@ -167,7 +166,7 @@ namespace GnarlyGameStudio.Serializer
         [Test]
         public void TestCheckMore()
         {
-            _sendBridgeStream.Write(new byte[4] {19, 20, 25, 10});
+            _sendBridgeStream.Write(new byte[4] { 19, 20, 25, 10 });
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
@@ -185,6 +184,19 @@ namespace GnarlyGameStudio.Serializer
             Assert.AreEqual(10f, sendValue);
         }
 
+
+        [Test]
+        public void TestLong()
+        {
+            long dataValue = 1000;
+            _sendBridgeStream.Write(dataValue);
+            var data = _sendBridgeStream.Encode();
+
+            var receivePacket = new BridgeStream(data);
+            var sendValue = receivePacket.ReadLong();
+            Assert.AreEqual(dataValue, sendValue);
+        }
+
         [Test]
         public void TestByte()
         {
@@ -194,7 +206,7 @@ namespace GnarlyGameStudio.Serializer
 
             var receivePacket = new BridgeStream(data);
             var sendValue = receivePacket.ReadByte();
-            Assert.AreEqual((byte) 1, sendValue);
+            Assert.AreEqual((byte)1, sendValue);
         }
 
         [Test]
@@ -225,8 +237,8 @@ namespace GnarlyGameStudio.Serializer
             var matchInfo = new MatchInfo()
             {
                 matchId = 10,
-                playerIds = new List<int> {1, 2, 3},
-                playerNames = new List<string> {"fer", "meh", "şek", "sek"}
+                playerIds = new List<int> { 1, 2, 3 },
+                playerNames = new List<string> { "fer", "meh", "şek", "sek" }
             };
 
             _sendBridgeStream.Write(matchInfo);
@@ -245,15 +257,15 @@ namespace GnarlyGameStudio.Serializer
             var matchInfo = new MatchInfo()
             {
                 matchId = 10,
-                playerIds = new List<int> {1, 2, 3},
-                playerNames = new List<string> {"fer", "meh", "şek", "sek"}
+                playerIds = new List<int> { 1, 2, 3 },
+                playerNames = new List<string> { "fer", "meh", "şek", "sek" }
             };
 
             _sendBridgeStream.Write(matchInfo);
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
-            var returnMatchInfo = (MatchInfo) receivePacket.Read(typeof(MatchInfo));
+            var returnMatchInfo = (MatchInfo)receivePacket.Read(typeof(MatchInfo));
             Assert.AreEqual(matchInfo.matchId, returnMatchInfo.matchId);
             Assert.AreEqual(matchInfo.playerIds, returnMatchInfo.playerIds);
             Assert.AreEqual(matchInfo.playerNames, returnMatchInfo.playerNames);
@@ -311,7 +323,7 @@ namespace GnarlyGameStudio.Serializer
             var data = _sendBridgeStream.Encode();
 
             var receivePacket = new BridgeStream(data);
-            var returnMatchInfo = (List<MatchInfo>) receivePacket.ReadList(typeof(MatchInfo));
+            var returnMatchInfo = (List<MatchInfo>)receivePacket.ReadList(typeof(MatchInfo));
 
             Assert.AreEqual(list[0].matchId, returnMatchInfo[0].matchId);
             Assert.AreEqual(list[1].matchId, returnMatchInfo[1].matchId);
@@ -354,7 +366,7 @@ namespace GnarlyGameStudio.Serializer
             a.Write("Ferhat");
             a.Write(10);
             a.Write(true);
-            a.Write((byte) 255);
+            a.Write((byte)255);
             a.Write(15f);
             _sendBridgeStream.Write(a);
 
@@ -376,7 +388,7 @@ namespace GnarlyGameStudio.Serializer
                 "Expected to get the same integer as the second read on the received packet");
             Assert.AreEqual(true, readPacketA.ReadBool(),
                 "Expected to get the same bool as the second read on the received packet");
-            Assert.AreEqual((byte) 255, readPacketA.ReadByte(),
+            Assert.AreEqual((byte)255, readPacketA.ReadByte(),
                 "Expected to get the same byte as the third read on the received packet");
             Assert.AreEqual("Mehmet", readPacketB.ReadString(),
                 "Expected to get the same string as the first read on the received packet");
