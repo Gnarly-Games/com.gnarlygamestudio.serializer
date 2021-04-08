@@ -2,7 +2,7 @@
   "name": "com.gnarlygamestudio.serializer",
   "displayName": "Bridge Stream",
   "description": "BridgeStream is an order oriented binary serialization library developed for performance and efficiency.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "unity": "2019.4",
   "dependencies": {
     "com.unity.test-framework": "1.1.3"
