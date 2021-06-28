@@ -56,7 +56,7 @@ namespace GnarlyGameStudio.Serializer
             WriteIndex += bytes.Length;
         }
 
-        private void GrowBuffer(int length)
+        public void GrowBuffer(int length)
         {
             var isNeedResize = false;
             while (WriteIndex + length > _capacity)
